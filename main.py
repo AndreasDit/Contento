@@ -4,6 +4,7 @@ import os
 import json
 import shutil
 import logging
+from datetime import datetime
 import os
 from src.TwitterPoster import TwitterPoster
 
@@ -37,12 +38,12 @@ def process_json_tweets(
         access_token_secret (str): Twitter API access token secret
     """
     # Ensure directories exist
-    print("Start processing ...")
+    logging.info("Start processing ...")
     for directory in [input_directory, processed_directory, error_directory]:
         os.makedirs(directory, exist_ok=True)
 
     # Initialize Twitter poster
-    print("Initialize Twitter Poster ...")
+    logging.info("Initialize Twitter Poster ...")
     twitter_poster = TwitterPoster(
         consumer_key, 
         consumer_secret, 
@@ -50,44 +51,51 @@ def process_json_tweets(
         access_token_secret,
         BEARER_TOKEN
     )
+    
+    # Get current date and time
+    logging.info("Get current date and time ...")
+    current_datetime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     # Process JSON files
-    print("Process JSON files ...")
+    logging.info("Process JSON files ...")
     for filename in os.listdir(input_directory):
         if filename.endswith('.json'):
             file_path = os.path.join(input_directory, filename)
-            print(f"Processing {file_path} ...")
+            logging.info(f"Processing {file_path} ...")
             
             # Read JSON file
-            print(f"Reading JSON file {file_path}...")
+            logging.info(f"Reading JSON file {file_path}...")
             with open(file_path, 'r', encoding='utf-8') as file:
                 tweet_data = json.load(file)
             
             # Extract tweet details
-            print(f"Extracting tweet details ...")
+            logging.info(f"Extracting tweet details ...")
             content = tweet_data.get('content', '')
             hashtags = tweet_data.get('hashtags', '')
+            datetime_for_post = tweet_data.get('datetime_for_post', '')
+            logging.info(f"Extracted tweet details: {content}, {hashtags}, {datetime_for_post}")
             
             # Post tweet
-            print(f"Posting tweet ...")
-            if twitter_poster.post_tweet(content, hashtags):
-                # Move to processed directory
-                print(f"Moving {filename} to processed directory {processed_directory} ...")
-                processed_file_path = os.path.join(
-                    processed_directory, 
-                    f"processed_{filename}"
-                )
-                shutil.move(file_path, processed_file_path)
-                logging.info(f"Moved {filename} to processed directory")
-            else:
-                # Move to error directory
-                print(f"Moving {filename} to error directory {error_directory} ...")
-                error_file_path = os.path.join(
-                    error_directory, 
-                    f"error_{filename}"
-                )
-                shutil.move(file_path, error_file_path)
-                logging.warning(f"Moved {filename} to error directory")
+            logging.info(f"Posting tweet ...")
+            if datetime_for_post < current_datetime:
+                if twitter_poster.post_tweet(content, hashtags):
+                    # Move to processed directory
+                    logging.info(f"Moving {filename} to processed directory {processed_directory} ...")
+                    processed_file_path = os.path.join(
+                        processed_directory, 
+                        f"processed_{filename}"
+                    )
+                    shutil.move(file_path, processed_file_path)
+                    logging.info(f"Moved {filename} to processed directory")
+                else:
+                    # Move to error directory
+                    logging.info(f"Moving {filename} to error directory {error_directory} ...")
+                    error_file_path = os.path.join(
+                        error_directory, 
+                        f"error_{filename}"
+                    )
+                    shutil.move(file_path, error_file_path)
+                    logging.warning(f"Moved {filename} to error directory")
 
 if __name__ == "__main__":
     # Load environment variables from the .env file

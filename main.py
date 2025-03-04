@@ -78,24 +78,20 @@ def process_json_tweets(
             # Post tweet
             logging.info(f"Posting tweet ...")
             if datetime_for_post < current_datetime:
-                if twitter_poster.post_tweet(content, hashtags):
+                twitter_response = twitter_poster.post_tweet(content, hashtags)
+                if twitter_response or twitter_response is None:
                     # Move to processed directory
                     logging.info(f"Moving {filename} to processed directory {processed_directory} ...")
-                    processed_file_path = os.path.join(
-                        processed_directory, 
-                        f"processed_{filename}"
-                    )
+                    processed_file_path = os.path.join(processed_directory, filename)
                     shutil.move(file_path, processed_file_path)
                     logging.info(f"Moved {filename} to processed directory")
                 else:
                     # Move to error directory
                     logging.info(f"Moving {filename} to error directory {error_directory} ...")
-                    error_file_path = os.path.join(
-                        error_directory, 
-                        f"error_{filename}"
-                    )
+                    error_file_path = os.path.join(error_directory, filename)
                     shutil.move(file_path, error_file_path)
                     logging.warning(f"Moved {filename} to error directory")
+                    logging.warning(f"twitter_response: {twitter_response}")
 
 if __name__ == "__main__":
     # Load environment variables from the .env file

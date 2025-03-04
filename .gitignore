@@ -1,0 +1,6 @@
+# Secrets
+.env
+access_keys.json
+*.ipynb_checkpoints/
+*.ipynb
+*.pyc

@@ -1,6 +1,14 @@
 # Secrets
 .env
 access_keys.json
+
+# Technical python files
 *.ipynb_checkpoints/
 *.ipynb
 *.pyc
+
+# Log files
+*.log
+
+# Data
+data/

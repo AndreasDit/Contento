@@ -1,16 +1,117 @@
-# Contento
+# Contento 🚀
 
-This is a tool to post content to social media platforms, like Twitter, Instagram, etc.
-Posts can be planed ahead and scheduled to be posted at a specific date and time.
+## Overview
 
-## Motivation
+Contento is an open-source, self-hosted social media content management and scheduling tool designed for creators, marketers, and businesses who want full control over their social media posting workflow.
 
-Tools like this already exist, but are ridiculously expensive for the little service they provide.
-This repo provides a way to build, use and host such a tool yourself.
+## Key Features
 
-## Code stack
+- 📝 **Content Management**
+  - Create, edit, and manage social media posts across multiple platforms
+  - Store posts as easily readable JSON files
+  - Preview and organize upcoming content
 
-Posts are stored inside json files.
-There exists a streamlit application to manage those json files. It can be started using streamlit run json_file_manager.
-In order for the json files to be posted to their respective platforms the main.py function is used. It checks each jsons inside all "post_queue" folders and compares its intended post datetime with the current datetime. If the intended post datetime lies in the past, the content from the json files gets posted immediately.
-In order to achieve automated posting, a cron job should be implemented that runs the main function for example every 10 minutes.
+- ⏰ **Advanced Scheduling**
+  - Schedule posts for precise times
+  - Support for Twitter, Instagram, Facebook, and LinkedIn
+  - Automated posting mechanism
+
+- 💻 **Developer-Friendly**
+  - Simple, transparent architecture
+  - Easy to customize and extend
+  - Low-cost alternative to expensive social media management tools
+
+## Why Contento?
+
+Existing social media scheduling tools often come with:
+
+- 💸 Prohibitively expensive subscription models
+- 🔒 Limited customization
+- 📊 Unnecessary complex features
+
+Contento provides a lean, transparent solution that gives you:
+
+- 💯 Full control over your content
+- 🛠 Flexibility to modify and extend
+- 💵 Minimal operational costs
+
+## System Requirements
+
+- Python 3.8+
+- Streamlit
+- Platform-specific API credentials
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/contento.git
+   cd contento
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Set up platform API credentials:
+   - Create `.env` files for each platform
+   - Add API keys and access tokens
+
+## Usage
+
+### Content Management
+
+Start the Streamlit application:
+
+```bash
+streamlit run json_file_manager.py
+```
+
+### Scheduling Posts
+
+To post scheduled content:
+
+```bash
+python main.py
+```
+
+### Automation
+
+Set up a cron job to run `main.py` periodically:
+
+```bash
+# Example: Run every 10 minutes
+*/10 * * * * /path/to/python /path/to/contento/main.py
+```
+
+## Project Structure
+
+```
+contento/
+│
+├── data/                   # JSON post storage
+│   ├── twitter/
+│   │   └── posts_queue/
+│   ├── instagram/
+│   │   └── posts_queue/
+│   └── ...
+│
+├── json_file_manager.py    # Streamlit management interface
+├── main.py                 # Posting automation script
+├── requirements.txt        # Project dependencies
+└── README.md               # Project documentation
+```
+
+## Roadmap
+
+- [ ] Enhanced multi-platform support
+- [ ] Content analytics
+- [ ] Draft and template management
+- [ ] Improved error handling
+
+## Disclaimer
+
+Contento is a community-driven project. Always ensure compliance with platform-specific terms of service.

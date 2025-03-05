@@ -73,11 +73,11 @@ def process_json_tweets(
             content = tweet_data.get('content', '')
             hashtags = tweet_data.get('hashtags', '')
             datetime_for_post = tweet_data.get('datetime_for_post', '')
-            logging.info(f"Extracted tweet details: {content}, {hashtags}, {datetime_for_post}")
+            logging.info(f"Tweet to be posted at: {datetime_for_post}, while now is {current_datetime}.")
             
             # Post tweet
-            logging.info(f"Posting tweet ...")
             if datetime_for_post < current_datetime:
+                logging.info(f"Posting tweet ...")
                 twitter_response = twitter_poster.post_tweet(content, hashtags)
                 if twitter_response or twitter_response is None:
                     # Move to processed directory

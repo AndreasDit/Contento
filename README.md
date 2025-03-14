@@ -67,7 +67,7 @@ Contento provides a lean, transparent solution that gives you:
 Start the Streamlit application:
 
 ```bash
-streamlit run json_file_manager.py
+streamlit run write_content.py
 ```
 
 ### Scheduling Posts

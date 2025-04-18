@@ -67,7 +67,7 @@ Contento provides a lean, transparent solution that gives you:
 Start the Streamlit application:
 
 ```bash
-streamlit run write_content.py
+streamlit run content_manager.py
 ```
 
 ### Scheduling Posts
@@ -86,6 +86,10 @@ Set up a cron job to run `main.py` periodically:
 # Example: Run every 10 minutes
 */10 * * * * /path/to/python /path/to/contento/main.py
 ```
+
+## Logs
+
+Logs can be found in the file tweet_posting.log in the base path of your user.
 
 ## Project Structure
 

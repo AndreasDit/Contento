@@ -73,7 +73,7 @@ def process_json_tweets(
             content = tweet_data.get('content', '')
             hashtags = tweet_data.get('hashtags', '')
             datetime_for_post = tweet_data.get('datetime_for_post', '')
-            logging.info(f"Tweet to be posted at: {datetime_for_post}, while now is {current_datetime}.")
+            logging.info(f"Tweet to be posted at: {datetime_for_post}, while now is {current_datetime}. Posting time is in the past: {datetime_for_post < current_datetime}")
             
             # Post tweet
             if datetime_for_post < current_datetime:

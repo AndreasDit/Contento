@@ -124,7 +124,7 @@ class JSONFileManager:
         os.remove(filepath)
 
 def main():
-    st.title("JSON File Manager")
+    st.title("Content Manager")
     
     # Initialize file manager
     file_manager = JSONFileManager()
@@ -137,11 +137,11 @@ def main():
     file_name_to_path = dict(zip(file_display_names, files))
     
     # Sidebar for file operations
-    st.sidebar.header("File Operations")
+    st.sidebar.header("Content Operations")
     
     # File selection with display names
     selected_display_name = st.sidebar.selectbox(
-        "Select a JSON File", 
+        "Select post", 
         ["Create New"] + file_display_names
     )
     
@@ -158,7 +158,7 @@ def main():
             "id": file_manager.generate_unique_id(),
             "content": "",
             "hashtags": "",
-            "datetime_for_post": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+            "datetime_for_post": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         }
     
     # Handling file selection
@@ -176,12 +176,12 @@ def main():
             "id": loaded_data.get("id", ""),
             "content": loaded_data.get("content", ""),
             "hashtags": loaded_data.get("hashtags", ""),
-            "datetime_for_post": loaded_data.get("datetime_for_post", datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"))
+            "datetime_for_post": loaded_data.get("datetime_for_post", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         }
     
     # Form for editing/creating JSON
     with st.form(key='json_form'):
-        st.header("JSON File Details")
+        st.header("Post Details")
         
         # Platform selection
         platform = st.selectbox(
@@ -209,7 +209,7 @@ def main():
         
         datetime_for_post = st.text_input(
             "Datetime for Post (ISO Format)", 
-            value=st.session_state.form_data.get("datetime_for_post", datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"))
+            value=st.session_state.form_data.get("datetime_for_post", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
         
         # Buttons
@@ -250,7 +250,7 @@ def main():
                 "id": file_manager.generate_unique_id(),
                 "content": "",
                 "hashtags": "",
-                "datetime_for_post": datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+                "datetime_for_post": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             }
             st.rerun()
     
